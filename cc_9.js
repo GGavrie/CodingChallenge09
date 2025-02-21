@@ -48,42 +48,47 @@ class Company {
     constructor(name) {
         this.name = name; // Company name
         this.employees = []; // List of employees in the company
-    }
+    };
 
     addEmployee(employee) {
-        if (employee instanceof Employee) {
             this.employees.push(employee);
-        } else {
-            console.log("Only Employee or Manager instances can be added.");
-        }
+      
     }
 
     listEmployees() {
-        for (let employee of this.employees) {
-            console.log(employee.getDetails());
-        }
+        this.employees.forEach(employee => console.log(employee.getDetails()));
     }
-// Task 4 
+// Task 4 - Calculatin oayroll 
     calculateTotalPayroll() {
         return this.employees.reduce((total, employee) => {
-            return total + employee.calculateAnnualSalary();
+            let annualSalary = employee.calculateAnnualSalary();
+            let bonus = 0;
+            if (employee instanceof Manager) {
+                bonus = employee.calculateBonus();
+            }
+            return total + annualSalary + bonus;
         }, 0);
     }
 
-// Task 5 
+
 // Task 5 - Adding promotion method
-promoteToManager(employee, teamSize) {
-    const index = this.employees.indexOf(employee);
-    if (index !== -1) {
+promoteToManager(employeeName, teamSize) {
+    const employee = this.employees.find(emp => emp.name === employeeName);
+    if (employee) {
+        const index = this.employees.indexOf(employee);
         this.employees[index] = new Manager(employee.name, employee.id, employee.department, employee.salary, teamSize);
+        console.log(`${employeeName} promoted to Manager with team size ${teamSize}.`);
+    } else {
+        console.log(`Employee ${employeeName} not found.`);
     }
 }
 }
 
 // Test the functionality
 const company = new Company("TechCorp");
-company.addEmployee(emp1);
-company.addEmployee(mgr1);
-company.listEmployees();
+company.addEmployee(emp1);// employee 1 
+company.addEmployee(mgr1); // manager 1 
+company.listEmployees(); 
 console.log(`Total Annual Payroll: $${company.calculateTotalPayroll()}`);
-company.promoteToManager(emp1, 3)
+company.promoteToManager("Alice Johnson", 3);// promtoe employtee 
+company.listEmployees();
