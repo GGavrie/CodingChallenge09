@@ -15,20 +15,28 @@ class Employee {
         return this.salary * 12;
     }
 }
+const emp1 = new Employee("Alice Johnson", 101, "Sales", 5000); // new employee
+console.log(emp1.getDetails()); // print employee details
 
 
 // Task 2 - Creating Manager Class
-function Manager(name, id, department, salary, teamSize) {
-    Employee.call(this, name, id, department, salary); //  Employee properties
-    this.teamSize = teamSize; // Number of employees 
+class Manager extends Employee {
+    constructor(name, id, department, salary, teamSize) {
+        super(name, id, department, salary); // call employee constructor
+        this.teamSize = teamSize; // Manager's team size
+    }
 
     // Overriding getDetails to include team size
-    this.getDetails = function() {
-        return "Manager: " + this.name + ", ID: " + this.id + ", Department: " + this.department + ", Salary: $" + this.salary + ", Team Size: " + this.teamSize;
-    };
+    getDetails() {
+        return `Manager: ${this.name}, ID: ${this.id}, Department: ${this.department}, Salary: $${this.salary}, Team Size: ${this.teamSize}`;
+    }
 
     // Method to calculate bonus (10% of annual salary)
-    this.calculateBonus = function() {
+    calculateBonus() {
         return this.calculateAnnualSalary() * 0.10;
-    };
+    }
 }
+
+const mgr1 = new Manager("John Smith", 201, "IT", 8000, 5);
+console.log(mgr1.getDetails()); // Expected output: Manager details
+console.log(mgr1.calculateBonus()); // Expected output: 9600
