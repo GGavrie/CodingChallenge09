@@ -73,6 +73,21 @@ company.addEmployee(mgr1);
 company.listEmployees();
 // Expected output:
 // "Employee: Alice Johnson, ID: 101, Department: Sales, Salary: $5000"
-// "Manager: John Smith, ID: 201, Department: IT, Salary: $8000, Team Size: 5"
+// "Manager: John Smith, ID: 201, Department: IT, Salary: $8000, Team Size
 
 
+// Task 4 - Adding payroll calculation
+calculateTotalPayroll() {
+    return this.employees.reduce((total, employee) => {
+        return total + employee.calculateAnnualSalary();
+    }, 0);
+}
+
+const company = new Company("TechCorp");
+company.addEmployee(emp1);
+company.addEmployee(mgr1);
+company.listEmployees();
+
+
+
+ 
