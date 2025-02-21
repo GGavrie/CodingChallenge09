@@ -42,14 +42,14 @@ console.log(mgr1.getDetails()); // Expected output: Manager details
 console.log(mgr1.calculateBonus()); // Expected output: 9600
 
 
-// Task 3 
+
+// Task 3 - Creating a class company 
 class Company {
     constructor(name) {
         this.name = name; // Company name
         this.employees = []; // List of employees in the company
     }
 
-    // Method to add an employee to the company
     addEmployee(employee) {
         if (employee instanceof Employee) {
             this.employees.push(employee);
@@ -58,36 +58,32 @@ class Company {
         }
     }
 
-    // Method to list all employees in the company
     listEmployees() {
-        for (let i = 0; i < this.employees.length; i++) {
-            console.log(this.employees[i].getDetails());
+        for (let employee of this.employees) {
+            console.log(employee.getDetails());
         }
     }
+// Task 4 
+    calculateTotalPayroll() {
+        return this.employees.reduce((total, employee) => {
+            return total + employee.calculateAnnualSalary();
+        }, 0);
+    }
+
+// Task 5 
+// Task 5 - Adding promotion method
+promoteToManager(employee, teamSize) {
+    const index = this.employees.indexOf(employee);
+    if (index !== -1) {
+        this.employees[index] = new Manager(employee.name, employee.id, employee.department, employee.salary, teamSize);
+    }
+}
 }
 
-
+// Test the functionality
 const company = new Company("TechCorp");
 company.addEmployee(emp1);
 company.addEmployee(mgr1);
 company.listEmployees();
-// Expected output:
-// "Employee: Alice Johnson, ID: 101, Department: Sales, Salary: $5000"
-// "Manager: John Smith, ID: 201, Department: IT, Salary: $8000, Team Size
-
-
-// Task 4 - Adding payroll calculation
-calculateTotalPayroll() {
-    return this.employees.reduce((total, employee) => {
-        return total + employee.calculateAnnualSalary();
-    }, 0);
-}
-
-const company = new Company("TechCorp");
-company.addEmployee(emp1);
-company.addEmployee(mgr1);
-company.listEmployees();
-
-
-
- 
+console.log(`Total Annual Payroll: $${company.calculateTotalPayroll()}`);
+company.promoteToManager(emp1, 3)
